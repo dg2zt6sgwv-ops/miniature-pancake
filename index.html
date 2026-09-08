@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Привет</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .container {
+            background: #111;
+            padding: 40px 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #2a2a2a;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .text {
+            font-size: 22px;
+            line-height: 1.6;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 20px rgba(0,255,0,0.2);
+            word-break: break-word;
+        }
+        .text .highlight {
+            color: #ff4444;
+        }
+        .text .ip {
+            color: #4fc3f7;
+        }
+        .counter {
+            color: #888;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 30px;
+            padding: 12px 32px;
+            background: #ff4444;
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 0 20px rgba(255,68,68,0.3);
+            font-family: 'Courier New', monospace;
+        }
+        button:active { transform: scale(0.96); }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+<div class="container" id="container">
+    <div id="textDisplay" class="text">👾</div>
+    <div class="counter" id="counter">1 / 6</div>
+    <button id="nextBtn">ДАЛЕЕ →</button>
+</div>
+
+<script>
+    // ===== КАДРЫ (в точности как ты написал) =====
+    const frames = [
+        `привет не ждал а я знаю все о тебе`,
+        `Артемий как ты думаешь кому ты говорил что у тебя разбит телефон?`,
+        `а Хомис пидор`,
+        `приветик Богданов не ждал? <span class="ip">192.168.1.18</span>`,
+        `ну что? Страшно? ЕЩЕ НЕТ?<br><br>а то что у тебя 7 вирусов от тех игр что ты скачивал через интернет тебе не страшно?`,
+        `давай ка заминируем школу от твоего имени? Школа же №1?<br><br>ну что твой друг Артем тебя ебет`
+    ];
+
+    let currentIndex = 0;
+    const textDisplay = document.getElementById('textDisplay');
+    const counter = document.getElementById('counter');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function showFrame(index) {
+        textDisplay.innerHTML = frames[index];
+        counter.textContent = `${index + 1} / ${frames.length}`;
+        if (index === frames.length - 1) {
+            nextBtn.textContent = '🏁 КОНЕЦ';
+        } else {
+            nextBtn.textContent = 'ДАЛЕЕ →';
+        }
+    }
+
+    function nextFrame() {
+        if (currentIndex < frames.length - 1) {
+            currentIndex++;
+            showFrame(currentIndex);
+        } else {
+            // финал — просто показываем последний кадр
+            nextBtn.disabled = true;
+            nextBtn.textContent = '⏹';
+            textDisplay.innerHTML = frames[frames.length - 1] + '<br><br><span style="color:#444;">конец</span>';
+        }
+    }
+
+    // ===== АВТОЗАПУСК (первый кадр сразу) =====
+    showFrame(0);
+
+    // ===== СОБЫТИЕ =====
+    nextBtn.addEventListener('click', nextFrame);
+</script>
+</body>
+</html>
